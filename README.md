@@ -3,6 +3,11 @@
 The shared foundation of the FilaMind suite — **framework-agnostic TypeScript** consumed by FilaMind 3d
 (web), FilaMind screen (touch), and FilaMind flow. Phase 0.
 
+[![CI](https://github.com/filamind-app/filamind-core/actions/workflows/ci.yml/badge.svg)](https://github.com/filamind-app/filamind-core/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@filamind-app/core?color=111111&label=npm)](https://www.npmjs.com/package/@filamind-app/core)
+[![License: GPLv3](https://img.shields.io/badge/License-GPLv3-111111.svg)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-111111?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+
 ## What's here
 | Module | Purpose |
 | --- | --- |
