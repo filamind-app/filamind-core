@@ -26,7 +26,7 @@ The shared foundation of the FilaMind suite — **framework-agnostic TypeScript*
 | `observability/logger.ts` | pluggable ring-buffer `Logger` (the diagnostics-bundle source; replaces silent `catch {}`) |
 | `registry/widget-registry.ts` | the cross-surface widget/plugin registry + `aggregateSubscriptions` |
 | `remote/commands.ts` · `remote/command-sender.ts` | the cross-surface command bus — **UI-only** commands (navigate / message / locate) over a Moonraker **agent** connection. `CommandSender` identifies as an agent, re-identifies on reconnect, is single-flight, and sanitizes control/bidi text; it is never a mutation path (those still go through `WriteArbiter`) |
-| `theme/tokens.ts` | the exclusive Pharaonic themes (Tutankhamun · Horus · Anubis) as `--fm-*` design tokens |
+| `theme/tokens.ts` | the theme palettes as `--fm-*` design tokens — 3 signature Pharaonic themes (Tutankhamun · Horus · Anubis) + neutral **light** / **dark** |
 | `i18n/locale-meta.ts` | the 19 shipped locales `{ code, name, rtl, dir }` + RTL list + CLDR `pluralCategory` (`Intl.PluralRules`) |
 | `i18n/translator.ts` | framework-agnostic `translate` / `Translator` + the backend message-code contract (`resolveMessage`) |
 | `i18n/locales/*.json` | drop-in catalogs (en + ar shipped as proof, incl. the full Arabic plural set) |
