@@ -1,0 +1,9 @@
+{
+  "app": { "name": "FilaMind 3d", "ready": "Ready", "printing": "Printing" },
+  "job": {
+    "file": "Printing {file}",
+    "eta": "ETA {minutes} min",
+    "layers": { "one": "{count} layer", "other": "{count} layers" }
+  },
+  "setup": { "probe": "System probe", "migrate": "Migrate to suite", "alongside": "Install alongside" }
+}

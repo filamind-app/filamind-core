@@ -1,0 +1,16 @@
+{
+  "app": { "name": "FilaMind 3d", "ready": "جاهزة", "printing": "تطبع" },
+  "job": {
+    "file": "طباعة {file}",
+    "eta": "الوقت المتبقّي {minutes} دقيقة",
+    "layers": {
+      "zero": "لا طبقات",
+      "one": "طبقة واحدة",
+      "two": "طبقتان",
+      "few": "{count} طبقات",
+      "many": "{count} طبقة",
+      "other": "{count} طبقة"
+    }
+  },
+  "setup": { "probe": "فحص النظام", "migrate": "الترحيل إلى السويت", "alongside": "تثبيت جنباً لجنب" }
+}

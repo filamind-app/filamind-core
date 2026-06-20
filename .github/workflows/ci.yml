@@ -1,0 +1,17 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'   # keep in lockstep with @types/node major
+      - run: npm ci
+      - run: npm run type-check
+      - run: npm test
+      - run: npm run build
+      - name: No external-project references (R1)
+        run: bash scripts/check-no-external-refs.sh
