@@ -70,4 +70,31 @@ describe('themes', () => {
       expect(vars['--fm-primary-contrast']).toBe(t.primaryContrast)
     }
   })
+
+  it('ships the 3 Pharaonic themes plus neutral light + dark', () => {
+    const names = Object.keys(themes)
+    for (const n of ['tutankhamun', 'horus', 'anubis', 'light', 'dark']) {
+      expect(names).toContain(n)
+    }
+  })
+
+  it('keeps text legible on background and on the primary (WCAG contrast)', () => {
+    const lum = (hex: string): number => {
+      const c = hex.replace('#', '')
+      const chan = (i: number): number => {
+        const v = parseInt(c.slice(i, i + 2), 16) / 255
+        return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4
+      }
+      return 0.2126 * chan(0) + 0.7152 * chan(2) + 0.0722 * chan(4)
+    }
+    const ratio = (a: string, b: string): number => {
+      const la = lum(a)
+      const lb = lum(b)
+      return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05)
+    }
+    for (const [name, t] of Object.entries(themes)) {
+      expect(ratio(t.text, t.bg), `${name}: body text on bg`).toBeGreaterThanOrEqual(4.5)
+      expect(ratio(t.primaryContrast, t.primary), `${name}: text on primary`).toBeGreaterThanOrEqual(3)
+    }
+  })
 })
