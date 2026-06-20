@@ -1,4 +1,4 @@
-# @filamind/core
+# @filamind-app/core
 
 The shared foundation of the FilaMind suite — **framework-agnostic TypeScript** consumed by FilaMind 3d
 (web), FilaMind screen (touch), and FilaMind flow. Phase 0.
@@ -28,7 +28,7 @@ The shared foundation of the FilaMind suite — **framework-agnostic TypeScript*
 
 ## Wiring (the consumer entry point)
 ```ts
-import { MoonrakerClient, FilaMindSession, FULL_CONTROL } from '@filamind/core'
+import { MoonrakerClient, FilaMindSession, FULL_CONTROL } from '@filamind-app/core'
 
 const connector = new MoonrakerClient({ url: 'ws://printer.local:7125/websocket' })
 const session = new FilaMindSession(connector, {
