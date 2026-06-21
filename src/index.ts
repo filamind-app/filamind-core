@@ -17,6 +17,14 @@ export { MoonrakerClient } from './moonraker/client'
 export type { MoonrakerClientOptions, WebSocketLike } from './moonraker/client'
 export { deriveCandidates, resolveMoonrakerUrl } from './moonraker/discovery'
 export type { DiscoveryOptions, LocationLike } from './moonraker/discovery'
+export { RpcError, parseNotifyEvent } from './moonraker/rpc-types'
+export type {
+  MoonrakerMethods,
+  NotifyEvent,
+  ServerInfo,
+  PrinterInfo,
+  QueryResult,
+} from './moonraker/rpc-types'
 export type {
   Connector,
   ConnectorCallbacks,

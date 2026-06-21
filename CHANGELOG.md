@@ -2,6 +2,10 @@
 
 All notable changes to `@filamind-app/core` are documented here. Format: `## [version]` sections (parsed by the release workflow).
 
+## [0.1.3]
+
+- **§18.3 — RPC type safety** — `RpcError` preserves the JSON-RPC `code` + `data` (no longer flattened to a bare `Error`); `call()` gains a typed overload over `MoonrakerMethods` (result types + method-name autocomplete for common methods; the generic `call<T>()` still works for any method); `NotifyEvent` + `parseNotifyEvent()` turn positional `notify_*` params into a discriminated union so consumers narrow by event instead of hand-casting `unknown`.
+
 ## [0.1.2]
 
 - **F16 — zero-config endpoint discovery** — `resolveMoonrakerUrl()` races candidate `ws(s)://…/websocket` endpoints (same-origin reverse-proxy, direct `:7125`, localhost) and resolves with the first that opens; a runtime `override` always wins. `deriveCandidates()` exposed for callers. Socket-injectable (`wsFactory`) and fully unit-tested.

@@ -18,6 +18,7 @@ The shared foundation of the FilaMind suite — **framework-agnostic TypeScript*
 | `moonraker/client.ts` | `MoonrakerClient` — reconnecting JSON-RPC WS (**injectable socket**, backoff **+ jitter + max-attempts**), id-correlated, notify fan-out, re-subscribe on reconnect, **REST file channel** (`upload`/`download`) |
 | `moonraker/discovery.ts` | **zero-config endpoint discovery** — `resolveMoonrakerUrl()` races candidate endpoints (same-origin proxy / direct `:7125` / localhost) → first to open wins; runtime `override` short-circuits. Socket-injectable |
 | `moonraker/subscriptions.ts` | the **versioned** canonical subscription contract — `NARROW_STATUS` / `FULL_CONTROL` tiers + `tier()` |
+| `moonraker/rpc-types.ts` | **RPC type safety** — `RpcError` (keeps JSON-RPC `code`/`data`) · `MoonrakerMethods` typed-`call` result map · `NotifyEvent` + `parseNotifyEvent()` discriminated notify union |
 | `printer/klippy.ts` | the Klippy lifecycle (`ready`/`startup`/`shutdown`/`error`/`disconnected`) — tracked apart from the socket so a FIRMWARE_RESTART re-seeds instead of showing stale-as-live |
 | `printer/prompt-parser.ts` | parses Klipper's `// action:prompt_*` protocol into structured modal dialogs (`PromptParser`) |
 | `session/session.ts` | **`FilaMindSession`** — the orchestrator: staged init (identify → capabilities → query/seed → subscribe), routes `notify_*`, owns the Klippy-aware `live`/stale gate |

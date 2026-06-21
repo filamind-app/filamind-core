@@ -10,6 +10,7 @@ import type {
   SubscriptionMap,
 } from './connector'
 import type { Logger } from '../observability/logger'
+import { RpcError, type MoonrakerMethods } from './rpc-types'
 
 /** Minimal WebSocket surface the client uses — the DOM WebSocket satisfies it; tests fake it. */
 export interface WebSocketLike {
@@ -105,14 +106,19 @@ export class MoonrakerClient implements Connector {
     if (this._state !== 'ready') this.setState('closed')
   }
 
-  call<T = unknown>(method: string, params: Record<string, unknown> = {}): Promise<T> {
+  call<M extends keyof MoonrakerMethods>(
+    method: M,
+    params?: Record<string, unknown>,
+  ): Promise<MoonrakerMethods[M]>
+  call<T = unknown>(method: string, params?: Record<string, unknown>): Promise<T>
+  call(method: string, params: Record<string, unknown> = {}): Promise<unknown> {
     const id = this.nextId++
-    return new Promise<T>((resolve, reject) => {
+    return new Promise<unknown>((resolve, reject) => {
       const timer = setTimeout(() => {
         this.pending.delete(id)
-        reject(new Error(`moonraker request timed out: ${method}`))
+        reject(new RpcError(`moonraker request timed out: ${method}`))
       }, this.opts.requestTimeoutMs ?? 10_000)
-      this.pending.set(id, { resolve: resolve as (v: unknown) => void, reject, timer })
+      this.pending.set(id, { resolve, reject, timer })
       this.send({ jsonrpc: '2.0', method, params, id })
     })
   }
@@ -185,7 +191,13 @@ export class MoonrakerClient implements Connector {
   }
 
   private onMessage(data: string): void {
-    let msg: { id?: number; result?: unknown; error?: { message?: string }; method?: string; params?: unknown }
+    let msg: {
+      id?: number
+      result?: unknown
+      error?: { code?: number; message?: string; data?: unknown }
+      method?: string
+      params?: unknown
+    }
     try {
       msg = JSON.parse(data)
     } catch {
@@ -196,7 +208,7 @@ export class MoonrakerClient implements Connector {
       if (!p) return
       clearTimeout(p.timer)
       this.pending.delete(msg.id)
-      if (msg.error) p.reject(new Error(msg.error.message ?? 'rpc error'))
+      if (msg.error) p.reject(new RpcError(msg.error.message ?? 'rpc error', msg.error.code, msg.error.data))
       else p.resolve(msg.result)
       return
     }
