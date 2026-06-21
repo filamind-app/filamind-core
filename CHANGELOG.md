@@ -2,6 +2,10 @@
 
 All notable changes to `@filamind-app/core` are documented here. Format: `## [version]` sections (parsed by the release workflow).
 
+## [0.1.2]
+
+- **F16 — zero-config endpoint discovery** — `resolveMoonrakerUrl()` races candidate `ws(s)://…/websocket` endpoints (same-origin reverse-proxy, direct `:7125`, localhost) and resolves with the first that opens; a runtime `override` always wins. `deriveCandidates()` exposed for callers. Socket-injectable (`wsFactory`) and fully unit-tested.
+
 ## [0.1.1]
 
 - **Themes** — add two neutral themes (`light`, `dark`) alongside the three Pharaonic ones; `ThemeName` gains `'light' | 'dark'`. A WCAG contrast guard test asserts every theme keeps body text ≥ 4.5:1 on its background and text ≥ 3:1 on its primary.

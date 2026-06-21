@@ -16,6 +16,7 @@ The shared foundation of the FilaMind suite — **framework-agnostic TypeScript*
 | `state/printer.ts` | `PrinterState` — merge-patch from `notify_status_update`, **1 s coalescing + `motion_report` fast-path** |
 | `moonraker/connector.ts` | the backend-agnostic `Connector` seam (Moonraker first; remote/others later) |
 | `moonraker/client.ts` | `MoonrakerClient` — reconnecting JSON-RPC WS (**injectable socket**, backoff **+ jitter + max-attempts**), id-correlated, notify fan-out, re-subscribe on reconnect, **REST file channel** (`upload`/`download`) |
+| `moonraker/discovery.ts` | **zero-config endpoint discovery** — `resolveMoonrakerUrl()` races candidate endpoints (same-origin proxy / direct `:7125` / localhost) → first to open wins; runtime `override` short-circuits. Socket-injectable |
 | `moonraker/subscriptions.ts` | the **versioned** canonical subscription contract — `NARROW_STATUS` / `FULL_CONTROL` tiers + `tier()` |
 | `printer/klippy.ts` | the Klippy lifecycle (`ready`/`startup`/`shutdown`/`error`/`disconnected`) — tracked apart from the socket so a FIRMWARE_RESTART re-seeds instead of showing stale-as-live |
 | `printer/prompt-parser.ts` | parses Klipper's `// action:prompt_*` protocol into structured modal dialogs (`PromptParser`) |
