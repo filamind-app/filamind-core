@@ -1,6 +1,6 @@
 {
   "name": "@filamind-app/core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Shared foundation for the FilaMind suite — Moonraker client, reactive printer state, provenance-stamped values, design tokens, and the widget/plugin registry. Framework-agnostic TypeScript.",
   "license": "GPL-3.0-or-later",
   "repository": {

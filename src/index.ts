@@ -15,6 +15,8 @@ export type { PrinterObjects } from './state/printer'
 // Moonraker transport (behind a connector seam)
 export { MoonrakerClient } from './moonraker/client'
 export type { MoonrakerClientOptions, WebSocketLike } from './moonraker/client'
+export { deriveCandidates, resolveMoonrakerUrl } from './moonraker/discovery'
+export type { DiscoveryOptions, LocationLike } from './moonraker/discovery'
 export type {
   Connector,
   ConnectorCallbacks,
