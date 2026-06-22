@@ -7,6 +7,7 @@ import { Observable } from '../state/observable'
 import type { Connector } from '../moonraker/connector'
 import { applyTheme, DEFAULT_THEME, themes, type ThemeName } from '../theme/tokens'
 import { DEFAULT_LOCALE, LOCALES, localeMeta } from '../i18n/locale-meta'
+import { coerceDashboardLayout, type DashboardLayout } from '../registry/dashboard-resolver'
 
 export const SETTINGS_VERSION = 1
 
@@ -20,6 +21,8 @@ export interface UserSettings {
   motifDensity: 'off' | 'subtle' | 'full'
   /** reduce animation/illustration for low-power or accessibility */
   reducedMotion: boolean
+  /** the single per-surface dashboard definition (resolved per surface + viewport at render) */
+  dashboardLayout?: DashboardLayout
 }
 
 export const DEFAULT_SETTINGS: UserSettings = {
@@ -38,7 +41,7 @@ const MOTIFS = new Set<string>(['off', 'subtle', 'full'])
  *  validates every enum, stamps the current version. Used by hydrate() + import(). */
 export function migrate(raw: unknown): UserSettings {
   const r = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {}
-  return {
+  const out: UserSettings = {
     version: SETTINGS_VERSION,
     theme: typeof r.theme === 'string' && r.theme in themes ? (r.theme as ThemeName) : DEFAULT_SETTINGS.theme,
     locale:
@@ -55,6 +58,11 @@ export function migrate(raw: unknown): UserSettings {
         : DEFAULT_SETTINGS.motifDensity,
     reducedMotion: typeof r.reducedMotion === 'boolean' ? r.reducedMotion : DEFAULT_SETTINGS.reducedMotion,
   }
+  // The dashboard layout is optional; only carry it through when it coerces to a valid shape so the
+  // round-trip of a layout-free blob stays identical to DEFAULT_SETTINGS.
+  const layout = coerceDashboardLayout(r.dashboardLayout)
+  if (layout) out.dashboardLayout = layout
+  return out
 }
 
 /** App-provided persistence — the Moonraker-DB impl is keyed by machineUUID; tests use memory. */

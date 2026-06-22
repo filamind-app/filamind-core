@@ -75,6 +75,20 @@ export {
 } from './registry/widget-registry'
 export type { WidgetDefinition, SurfaceTarget } from './registry/widget-registry'
 
+// per-surface adaptive dashboard: one definition, resolved per surface + viewport
+export {
+  surfaceHint,
+  resolveDashboard,
+  coerceDashboardLayout,
+  DASHBOARD_LAYOUT_VERSION,
+} from './registry/dashboard-resolver'
+export type {
+  SurfaceHint,
+  DashboardSlot,
+  DashboardLayout,
+  ResolvedDashboard,
+} from './registry/dashboard-resolver'
+
 // Pharaonic design tokens
 export {
   themes,
