@@ -3,7 +3,9 @@ name: Release
 # Cut a release by bumping the version in package.json and pushing a matching tag:
 #   npm version patch   # or minor/major — commits + creates the vX.Y.Z tag
 #   git push --follow-tags
-# Publishing to npm needs an NPM_TOKEN repo secret (Settings → Secrets and variables → Actions).
+# The npm publish step runs only when an NPM_TOKEN repo secret is set (Settings → Secrets and
+# variables → Actions). Without it the publish is SKIPPED (not failed) — publish manually instead
+# with `npm publish --access public` — and the GitHub Release is still created from the CHANGELOG.
 on:
   push:
     tags: ['v*']
@@ -15,6 +17,8 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
@@ -24,9 +28,11 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
-      - run: npm publish --provenance --access public
+      - name: Publish to npm (only when NPM_TOKEN is set; otherwise publish manually)
+        if: ${{ env.NPM_TOKEN != '' }}
+        run: npm publish --provenance --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
       # Release notes come from CHANGELOG.md (not auto-generated from commits) so the
       # published text is authored and stays within the R1 no-external-refs rule.
       - name: Release notes from CHANGELOG
