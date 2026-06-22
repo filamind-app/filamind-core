@@ -2,6 +2,10 @@
 
 All notable changes to `@filamind-app/core` are documented here. Format: `## [version]` sections (parsed by the release workflow).
 
+## [0.1.4]
+
+- **Per-surface adaptive dashboard** — a single machineUUID-keyed dashboard definition plus a pure resolver that adapts it to each surface + viewport: `surfaceHint(target, viewportWidth)` (`dense-desktop` / `thumb-phone` / `big-touch`), a `DashboardLayout` / `DashboardSlot` schema, and `resolveDashboard(layout, available, hint)` (honours slot order, appends widgets the layout doesn't mention, hides per-hint via `hideOn`, drops unknown ids, returns the column count for the hint). `coerceDashboardLayout()` validates persisted layouts; `UserSettings` gains an optional `dashboardLayout` carried through `migrate()` only when valid. Framework-agnostic, so every surface renders from the same source; never controls the emergency stop (shells wire that in independently).
+
 ## [0.1.3]
 
 - **§18.3 — RPC type safety** — `RpcError` preserves the JSON-RPC `code` + `data` (no longer flattened to a bare `Error`); `call()` gains a typed overload over `MoonrakerMethods` (result types + method-name autocomplete for common methods; the generic `call<T>()` still works for any method); `NotifyEvent` + `parseNotifyEvent()` turn positional `notify_*` params into a discriminated union so consumers narrow by event instead of hand-casting `unknown`.
