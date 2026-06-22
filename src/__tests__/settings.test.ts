@@ -115,6 +115,13 @@ describe('migrate (coercion / hardening)', () => {
     expect(migrate(42)).toEqual(DEFAULT_SETTINGS)
   })
 
+  it('carries a valid dashboardLayout through and omits an invalid one', () => {
+    const m = migrate({ dashboardLayout: { slots: [{ widgetId: 'temps', order: 1 }] } })
+    expect(m.dashboardLayout).toEqual({ version: 1, slots: [{ widgetId: 'temps', order: 1 }] })
+    expect(migrate({ dashboardLayout: 'nope' })).not.toHaveProperty('dashboardLayout')
+    expect(migrate({})).not.toHaveProperty('dashboardLayout')
+  })
+
   it('import() rejects unknown keys and survives malformed JSON', () => {
     const s = new SettingsStore()
     s.import('{ not valid json')
