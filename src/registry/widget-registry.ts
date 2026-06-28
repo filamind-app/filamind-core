@@ -12,7 +12,7 @@ export interface WidgetDefinition {
   title: string
   icon?: string
   description?: string
-  /** lazy component loader — the host framework (Vue) resolves it (kept as `unknown` here) */
+  /** lazy component loader - the host framework (Vue) resolves it (kept as `unknown` here) */
   component: () => Promise<unknown>
   defaultSize?: { w: number; h: number }
   /** declared data needs, aggregated across active widgets to subscribe once */
@@ -47,7 +47,7 @@ export function aggregateSubscriptions(ids: string[]): SubscriptionMap {
     for (const obj of Object.keys(subs)) {
       const fields = subs[obj]
       if (fields === null || out[obj] === null) {
-        out[obj] = null // null wins — "all fields"
+        out[obj] = null // null wins - "all fields"
       } else {
         out[obj] = Array.from(new Set([...(out[obj] ?? []), ...(fields ?? [])]))
       }
@@ -56,7 +56,7 @@ export function aggregateSubscriptions(ids: string[]): SubscriptionMap {
   return out
 }
 
-/** Test/host helper — clear the registry. */
+/** Test/host helper - clear the registry. */
 export function _resetRegistry(): void {
   registry.clear()
 }

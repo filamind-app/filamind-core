@@ -1,11 +1,11 @@
 name: Release
 
 # Cut a release by bumping the version in package.json and pushing a matching tag:
-#   npm version patch   # or minor/major — commits + creates the vX.Y.Z tag
+#   npm version patch   # or minor/major - commits + creates the vX.Y.Z tag
 #   git push --follow-tags
-# The npm publish step runs only when an NPM_TOKEN repo secret is set (Settings → Secrets and
-# variables → Actions). Without it the publish is SKIPPED (not failed) — publish manually instead
-# with `npm publish --access public` — and the GitHub Release is still created from the CHANGELOG.
+# The npm publish step runs only when an NPM_TOKEN repo secret is set (Settings > Secrets and
+# variables > Actions). Without it the publish is SKIPPED (not failed) - publish manually instead
+# with `npm publish --access public` - and the GitHub Release is still created from the CHANGELOG.
 on:
   push:
     tags: ['v*']

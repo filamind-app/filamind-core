@@ -1,4 +1,4 @@
-// Provenance-stamped values — the "never lie" core invariant (§12 spine).
+// Provenance-stamped values - the "never lie" core invariant (§12 spine).
 // Every value the UI shows can carry where it came from + when, so widgets can
 // render it dimmed / struck / disabled when it is stale or unknown.
 
@@ -6,7 +6,7 @@ export type Source = 'live' | 'cache' | 'optimistic' | 'unknown'
 
 export interface Stamped<T> {
   value: T
-  /** when this value arrived (ms epoch, client clock — Moonraker has no server timestamp) */
+  /** when this value arrived (ms epoch, client clock - Moonraker has no server timestamp) */
   ts: number
   source: Source
   /** ms after `ts` when the value should be treated as stale (omit = never goes stale on its own) */

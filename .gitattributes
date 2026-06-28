@@ -1,7 +1,7 @@
 # Normalize line endings to LF in the repository (no CRLF churn on Windows checkouts).
 * text=auto eol=lf
 
-# Binary assets — never normalize.
+# Binary assets - never normalize.
 *.png binary
 *.ico binary
 *.icns binary

@@ -1,4 +1,4 @@
-// Pluggable logger + a bounded ring buffer of recent events — the substrate the
+// Pluggable logger + a bounded ring buffer of recent events - the substrate the
 // diagnostics bundle (§11) and opt-in crash reporting collect from. Replaces the
 // silent `catch {}` swallows scattered across core.
 

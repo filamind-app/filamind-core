@@ -1,4 +1,4 @@
-// F16 — zero-config Moonraker endpoint discovery. Derives candidate ws(s)://…/websocket URLs
+// F16 - zero-config Moonraker endpoint discovery. Derives candidate ws(s)://…/websocket URLs
 // from the current page origin (same-origin reverse-proxy, the direct :7125 port, localhost)
 // and races short-lived probe sockets, resolving with the first that opens. A runtime override
 // always wins. The socket is injectable (wsFactory) so this is fully testable without a real WS.
@@ -8,14 +8,14 @@ import type { WebSocketLike } from './client'
 const defaultWsFactory = (url: string): WebSocketLike =>
   new WebSocket(url) as unknown as WebSocketLike
 
-/** A minimal view of `location` — the DOM Location satisfies it; tests pass a plain object. */
+/** A minimal view of `location` - the DOM Location satisfies it; tests pass a plain object. */
 export interface LocationLike {
   protocol?: string
   hostname?: string
 }
 
 export interface DiscoveryOptions {
-  /** Explicit runtime override (e.g. from settings). If set, it wins immediately — no probing. */
+  /** Explicit runtime override (e.g. from settings). If set, it wins immediately - no probing. */
   override?: string
   /** Candidate ws(s):// URLs to race. If omitted, they are derived from `location`. */
   candidates?: string[]

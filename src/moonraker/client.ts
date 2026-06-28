@@ -12,7 +12,7 @@ import type {
 import type { Logger } from '../observability/logger'
 import { RpcError, type MoonrakerMethods } from './rpc-types'
 
-/** Minimal WebSocket surface the client uses — the DOM WebSocket satisfies it; tests fake it. */
+/** Minimal WebSocket surface the client uses - the DOM WebSocket satisfies it; tests fake it. */
 export interface WebSocketLike {
   send(data: string): void
   close(): void
@@ -33,7 +33,7 @@ export interface MoonrakerClientOptions {
   url: string
   requestTimeoutMs?: number
   maxBackoffMs?: number
-  /** stop reconnecting after this many consecutive attempts → terminal 'closed' (default: unlimited) */
+  /** stop reconnecting after this many consecutive attempts > terminal 'closed' (default: unlimited) */
   maxReconnectAttempts?: number
   wsFactory?: (url: string) => WebSocketLike
   logger?: Logger
@@ -79,7 +79,7 @@ export class MoonrakerClient implements Connector {
         this.reconnectAttempts = 0
         this.setState('ready')
         this.restoreSubs()
-        // Only signal a RE-connect — the first open is driven by connect()/start() directly,
+        // Only signal a RE-connect - the first open is driven by connect()/start() directly,
         // so firing onReconnected here too would bootstrap the session twice concurrently.
         if (this.hasOpened) this.cb.onReconnected?.()
         this.hasOpened = true
@@ -102,7 +102,7 @@ export class MoonrakerClient implements Connector {
       this.reconnectTimer = undefined
     }
     this.ws?.close()
-    // If we were mid-backoff there is no open socket whose onclose will fire → go terminal now.
+    // If we were mid-backoff there is no open socket whose onclose will fire > go terminal now.
     if (this._state !== 'ready') this.setState('closed')
   }
 
@@ -124,7 +124,7 @@ export class MoonrakerClient implements Connector {
   }
 
   async subscribe(objects: SubscriptionMap): Promise<void> {
-    this.subs = { ...this.subs, ...objects } // union — remembered for reconnect restore
+    this.subs = { ...this.subs, ...objects } // union - remembered for reconnect restore
     await this.call('printer.objects.subscribe', { objects })
   }
 
@@ -176,7 +176,7 @@ export class MoonrakerClient implements Connector {
     const jitter = this.backoff * (0.8 + Math.random() * 0.4) // ±20% to de-synchronize storms
     this.reconnectTimer = setTimeout(() => {
       this.reconnectTimer = undefined
-      if (this.closedByUser) return // close() landed during the backoff window — don't reopen
+      if (this.closedByUser) return // close() landed during the backoff window - don't reopen
       this.connect().catch(() => {})
     }, jitter)
     this.backoff = Math.min(this.backoff * 2, this.opts.maxBackoffMs ?? 30_000)

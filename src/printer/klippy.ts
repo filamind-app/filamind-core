@@ -1,4 +1,4 @@
-// Klippy lifecycle — distinct from the WebSocket connection state. On FIRMWARE_RESTART
+// Klippy lifecycle - distinct from the WebSocket connection state. On FIRMWARE_RESTART
 // the socket stays open while Klipper drops + re-registers every object, so a control
 // surface MUST track this separately (and re-seed) or it shows stale data as live.
 

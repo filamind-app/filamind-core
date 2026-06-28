@@ -2,7 +2,7 @@
 
 # @filamind-app/core
 
-The shared foundation of the FilaMind suite — one framework-agnostic TypeScript library
+The shared foundation of the FilaMind suite - one framework-agnostic TypeScript library
 that talks to the printer, holds its state honestly, and looks the same everywhere.
 
 **Built by Egyptian makers, for world makers. Happy printing.** 🇪🇬
@@ -24,7 +24,7 @@ A small-team hobby project, built and tested on real printers. The code is all h
 
 `@filamind-app/core` is the shared core of the FilaMind suite. It is the one place that knows how
 to open a Moonraker connection, keep printer state honest, remember a user's settings, theme the UI,
-and translate it — so the three FilaMind surfaces (**3d** on the web, **screen** on a touch panel,
+and translate it - so the three FilaMind surfaces (**3d** on the web, **screen** on a touch panel,
 and the **flow** touch app) all behave the same way without copying that logic three times. It is
 pure TypeScript with no UI framework inside: the reactive layer is a plain observable, and each
 surface adapts it to Vue, signals, or whatever it uses. One core, many faces.
@@ -37,7 +37,7 @@ It is published to npm as `@filamind-app/core`:
 npm install @filamind-app/core
 ```
 
-The package is ESM-only and ships its own type declarations. It has **zero runtime dependencies** —
+The package is ESM-only and ships its own type declarations. It has **zero runtime dependencies** -
 nothing is pulled in behind it. Inside the FilaMind suite it is consumed through the workspace during
 development, so changes to the core are picked up by 3d, screen, and flow without a publish step.
 
@@ -47,15 +47,15 @@ development, so changes to the core are picked up by 3d, screen, and flow withou
 | --- | --- |
 | **Moonraker client** | A reconnecting JSON-RPC WebSocket plus a REST file channel, behind a backend-agnostic connector seam. Backs off with jitter, re-subscribes on reconnect, and times out stuck requests. |
 | **Zero-config discovery** | Finds the printer's WebSocket for you by racing the likely endpoints; the first to open wins, and an explicit override always wins first. |
-| **FilaMindSession** | The orchestrator. It connects, identifies, queries, subscribes, and routes every update into one place — and re-seeds itself after a firmware restart so the UI never shows stale data as live. |
+| **FilaMindSession** | The orchestrator. It connects, identifies, queries, subscribes, and routes every update into one place - and re-seeds itself after a firmware restart so the UI never shows stale data as live. |
 | **Printer state** | One reactive, merge-patched model of the printer, coalesced so the UI isn't thrashed, with a fast path so live motion stays smooth. |
 | **Provenance** | "Never-lie" stamped values that carry where they came from and when, so a widget can dim or strike anything that is stale or unknown. |
 | **WriteArbiter** | A single fail-closed chokepoint every mutation passes through: if state isn't trustworthy, or safe-mode is on, the write is refused. |
 | **Settings store** | One unified, persisted user-settings model (theme, language, density, motifs) that roams across every surface on the same printer, with strict versioned migration. |
-| **Theme tokens** | The FilaMind palette as `--fm-*` CSS variables — three signature Pharaonic themes plus a neutral light and dark — so one switch restyles everything. |
+| **Theme tokens** | The FilaMind palette as `--fm-*` CSS variables - three signature Pharaonic themes plus a neutral light and dark - so one switch restyles everything. |
 | **i18n** | Metadata for 19 locales (including right-to-left), correct plural rules, and a tiny framework-agnostic translator that 3d, screen, and flow all share. |
 | **Widget registry & dashboard** | Features register themselves without touching the core, declare which surfaces they target, and resolve into one adaptive dashboard per screen size. |
-| **Remote control bus** | A UI-only command bus so one FilaMind surface can steer another (navigate, message, locate). It can never move the printer — those still go through the WriteArbiter. |
+| **Remote control bus** | A UI-only command bus so one FilaMind surface can steer another (navigate, message, locate). It can never move the printer - those still go through the WriteArbiter. |
 | **Backup, identity, logging** | Reversible restore points, a stable per-machine id, and a ring-buffer logger that feeds the diagnostics bundle. |
 
 The full public surface is exported from a single entry point; the details of how each piece works
@@ -73,7 +73,7 @@ const session = new FilaMindSession(connector, {
 })
 await session.start()
 
-// reactive and framework-agnostic — bind these to Pinia, signals, or anything:
+// reactive and framework-agnostic - bind these to Pinia, signals, or anything:
 session.live.subscribe((live) => {/* dim the UI when the data isn't trustworthy-live */})
 session.printer.objects.subscribe((objects) => {/* render telemetry */})
 session.prompt.subscribe((dialog) => {/* show a Klipper modal */})
@@ -97,15 +97,15 @@ The core is exercised by the FilaMind suite on two machines that disagree on alm
 matters to a control surface. The first is a Sovol SV08: an STM32F103 mainboard, TMC2209 drivers
 over UART, a USB toolhead, and a BTT CB1 host. The second is a Voron-class CoreXY: an STM32H723
 mainboard, six TMC5160 drivers on a shared software-SPI bus, a CAN toolhead, and a Raspberry Pi 4.
-The pieces here that hurt to get wrong — the reconnect and re-seed logic, the Klippy-aware live gate,
-the fail-closed write path — are the ones those two printers stress, and the library ships **101
+The pieces here that hurt to get wrong - the reconnect and re-seed logic, the Klippy-aware live gate,
+the fail-closed write path - are the ones those two printers stress, and the library ships **101
 pure-logic tests** that pin that behaviour down without needing a printer attached.
 
 ## How it's built
 
 Pure TypeScript in `strict` mode, no UI framework imported anywhere in the core. Reactivity is a
 small hand-written observable that each surface adapts to its own framework. Everything that touches
-the network — the WebSocket, the discovery probes — is injectable, so the whole library is unit-tested
+the network - the WebSocket, the discovery probes - is injectable, so the whole library is unit-tested
 without a real socket. It builds to a single ESM bundle with type declarations via
 [tsup](https://tsup.egoist.dev), and a CI guard keeps the published code free of any reference to
 other projects. The deeper design is in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
@@ -114,7 +114,7 @@ other projects. The deeper design is in [docs/ARCHITECTURE.md](docs/ARCHITECTURE
 
 The core carries the suite's shared internationalization foundation: metadata for **19 locales**,
 the correct CLDR plural rules for each, and a tiny translator that 3d, screen, and flow all use so
-they translate identically. The catalogs themselves are drop-in JSON, one folder per locale — adding
+they translate identically. The catalogs themselves are drop-in JSON, one folder per locale - adding
 a language needs no code change. English and Arabic (right-to-left, with the full Arabic plural set)
 ship in the package as a working proof; the surfaces carry the rest.
 
@@ -132,7 +132,7 @@ ship in the package as a working proof; the surfaces carry the rest.
 npm install
 npm run type-check   # tsc --noEmit (strict)
 npm test             # vitest run (101 tests, 13 files)
-npm run build        # tsup → dist/ (ESM + .d.ts)
+npm run build        # tsup > dist/ (ESM + .d.ts)
 ```
 
 `npm run dev` rebuilds on change. CI runs the type check, the tests, the build, and the

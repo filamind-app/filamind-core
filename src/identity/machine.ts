@@ -1,10 +1,10 @@
-// machineUUID derivation — the stable key for roaming settings, the adaptive dashboard,
+// machineUUID derivation - the stable key for roaming settings, the adaptive dashboard,
 // and the remote-control substrate (F10). Moonraker has no single machine-uuid field, so
 // we derive a deterministic id from a stable subset of machine.system_info.
 
 import type { Connector } from '../moonraker/connector'
 
-/** FNV-1a 32-bit hex — deterministic, dependency-free. */
+/** FNV-1a 32-bit hex - deterministic, dependency-free. */
 function fnv1a(s: string): string {
   let h = 0x811c9dc5
   for (let i = 0; i < s.length; i++) {

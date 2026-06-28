@@ -105,7 +105,7 @@ describe('CommandSender', () => {
 
     bus.progress('reconnecting') // identity dropped
     expect(s.ready).toBe(false)
-    bus.reconnected() // genuine reconnect → re-identify
+    bus.reconnected() // genuine reconnect > re-identify
     await new Promise((r) => setTimeout(r, 0))
     expect(bus.calls.filter((c) => c.method === 'server.connection.identify')).toHaveLength(2)
     expect(s.ready).toBe(true)
@@ -138,7 +138,7 @@ describe('CommandSender', () => {
     expect(bus.methods()).not.toContain('printer.objects.subscribe')
   })
 
-  it('fires onReadyChange as the bus goes ready → not-ready → ready', async () => {
+  it('fires onReadyChange as the bus goes ready > not-ready > ready', async () => {
     const bus = new FakeBus()
     const flips: boolean[] = []
     const s = new CommandSender(bus, { ...opts, onReadyChange: (r) => void flips.push(r) })
@@ -155,9 +155,9 @@ describe('CommandSender', () => {
       const bus = new FakeBus()
       bus.identifyFailures = 1 // first identify rejects, second succeeds
       const s = new CommandSender(bus, opts)
-      await s.start() // first identify rejected → retry scheduled
+      await s.start() // first identify rejected > retry scheduled
       expect(s.ready).toBe(false)
-      await vi.advanceTimersByTimeAsync(600) // backoff (500ms) elapses → retry identifies
+      await vi.advanceTimersByTimeAsync(600) // backoff (500ms) elapses > retry identifies
       expect(s.ready).toBe(true)
       expect(bus.calls.filter((c) => c.method === 'server.connection.identify')).toHaveLength(2)
     } finally {
