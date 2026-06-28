@@ -46,4 +46,7 @@ jobs:
           [ -s NOTES.md ] || echo "See CHANGELOG.md for details." > NOTES.md
       - uses: softprops/action-gh-release@v3
         with:
+          # Release title is the version tag ALONE; any descriptive summary lives in the release
+          # commit / tag annotation, not the Release name. The body comes from CHANGELOG.md.
+          name: ${{ github.ref_name }}
           body_path: NOTES.md
