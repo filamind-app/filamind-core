@@ -1,4 +1,4 @@
-// @filamind-app/core — public surface (Phase 0 foundation).
+// @filamind-app/core - public surface (Phase 0 foundation).
 
 // provenance ("never lie")
 export { stamp, isStale, freshness, UNKNOWN } from './provenance'

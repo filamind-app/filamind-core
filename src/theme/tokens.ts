@@ -1,4 +1,4 @@
-// FilaMind's design tokens — one token layer shared across web (FilaMind 3d) and
+// FilaMind's design tokens - one token layer shared across web (FilaMind 3d) and
 // touch (FilaMind screen): three signature Pharaonic themes plus neutral light/dark.
 // Emits CSS custom properties (`--fm-*`) that Tailwind + SVG charts read, so one
 // switch restyles everything.
@@ -22,7 +22,7 @@ export interface ThemeTokens {
 export type ThemeName = 'tutankhamun' | 'horus' | 'anubis' | 'light' | 'dark'
 
 export const themes: Record<ThemeName, ThemeTokens> = {
-  // flagship default — obsidian + gold + lapis + turquoise
+  // flagship default - obsidian + gold + lapis + turquoise
   tutankhamun: {
     bg: '#0E0F12', surface: '#17171C', surface2: '#20202A', border: '#3A3320',
     text: '#F3ECD8', textMuted: '#B9AE8E',
@@ -43,14 +43,14 @@ export const themes: Record<ThemeName, ThemeTokens> = {
     primary: '#C2843B', primaryContrast: '#1A1714', secondary: '#7A5C2E', accent: '#8C1F1A',
     success: '#6E7C3A', warning: '#D98E2B', danger: '#8C1F1A',
   },
-  // neutral light — a conventional bright UI for users who prefer it
+  // neutral light - a conventional bright UI for users who prefer it
   light: {
     bg: '#F7F8FA', surface: '#FFFFFF', surface2: '#EEF1F5', border: '#D6DBE2',
     text: '#1A1D23', textMuted: '#5B6573',
     primary: '#2563EB', primaryContrast: '#FFFFFF', secondary: '#64748B', accent: '#0D9488',
     success: '#15803D', warning: '#B45309', danger: '#DC2626',
   },
-  // neutral dark — a conventional dark UI, distinct from the warm Pharaonic palettes
+  // neutral dark - a conventional dark UI, distinct from the warm Pharaonic palettes
   dark: {
     bg: '#0F1115', surface: '#171A21', surface2: '#1F232C', border: '#2C313C',
     text: '#E6E8EC', textMuted: '#9AA2AE',

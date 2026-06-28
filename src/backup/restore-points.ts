@@ -1,4 +1,4 @@
-// Restore-point primitive (§11/§12/§14/§15) — the "back up first, reversible, one-click
+// Restore-point primitive (§11/§12/§14/§15) - the "back up first, reversible, one-click
 // rollback" substrate that gates config saves, plugin installs, firmware flash, Known-Good
 // Pack apply, and migration. Snapshots are machineUUID-keyed, retention-bounded.
 

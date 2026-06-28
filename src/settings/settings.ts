@@ -1,4 +1,4 @@
-// Unified user settings & customization — the shared model behind the single
+// Unified user settings & customization - the shared model behind the single
 // "Settings & Customization" section (theme switcher + language switcher + prefs).
 // Persisted by the app in the Moonraker DB namespace, machineUUID-keyed (F10),
 // with a localStorage fallback. Applying a change re-themes + re-directions the UI.
@@ -37,7 +37,7 @@ export const DEFAULT_SETTINGS: UserSettings = {
 const DENSITIES = new Set<string>(['comfortable', 'compact'])
 const MOTIFS = new Set<string>(['off', 'subtle', 'full'])
 
-/** Coerce an arbitrary (old / foreign / partial) blob into valid UserSettings — drops unknown keys,
+/** Coerce an arbitrary (old / foreign / partial) blob into valid UserSettings - drops unknown keys,
  *  validates every enum, stamps the current version. Used by hydrate() + import(). */
 export function migrate(raw: unknown): UserSettings {
   const r = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {}
@@ -65,7 +65,7 @@ export function migrate(raw: unknown): UserSettings {
   return out
 }
 
-/** App-provided persistence — the Moonraker-DB impl is keyed by machineUUID; tests use memory. */
+/** App-provided persistence - the Moonraker-DB impl is keyed by machineUUID; tests use memory. */
 export interface SettingsPersistence {
   load(): Promise<Partial<UserSettings>>
   save(settings: UserSettings): Promise<void>
@@ -105,7 +105,7 @@ const DB_NAMESPACE = 'filamind'
 const DB_KEY = 'settings'
 
 /** Settings persisted in the printer's Moonraker database, so they roam across every FilaMind
- *  surface on that printer (3d, screen, …) — the F10 remote-config substrate. */
+ *  surface on that printer (3d, screen, …) - the F10 remote-config substrate. */
 export function moonrakerDbPersistence(connector: Connector): SettingsPersistence {
   return {
     load: async () => {
@@ -116,7 +116,7 @@ export function moonrakerDbPersistence(connector: Connector): SettingsPersistenc
         )
         return res?.value ?? {}
       } catch {
-        return {} // missing key or offline → fall back to defaults
+        return {} // missing key or offline > fall back to defaults
       }
     },
     save: async (s) => {
@@ -127,7 +127,7 @@ export function moonrakerDbPersistence(connector: Connector): SettingsPersistenc
           value: s,
         })
       } catch {
-        /* offline / no DB — the local copy still holds */
+        /* offline / no DB - the local copy still holds */
       }
     },
   }

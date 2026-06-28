@@ -1,5 +1,5 @@
-// FilaMindSession — the orchestrator that wires the isolated core pieces into one
-// working connection: staged init (identify → capabilities → query/seed → subscribe),
+// FilaMindSession - the orchestrator that wires the isolated core pieces into one
+// working connection: staged init (identify > capabilities > query/seed > subscribe),
 // routes notify_status_update into the state model, and owns the Klippy lifecycle so a
 // FIRMWARE_RESTART re-seeds + re-subscribes (instead of showing stale data as live).
 
@@ -25,7 +25,7 @@ export interface SessionOptions {
   subscriptions?: SubscriptionMap
   identify?: IdentifyInfo
   logger?: Logger
-  /** Receive cross-surface agent events (notify_agent_event) — e.g. remote-control commands from
+  /** Receive cross-surface agent events (notify_agent_event) - e.g. remote-control commands from
    *  another FilaMind surface. Discrete (fired per event, never replayed), so no stale re-fire. */
   onAgentEvent?: (ev: AgentEvent) => void
 }
@@ -76,7 +76,7 @@ export class FilaMindSession {
     this.setLive(false)
   }
 
-  /** Staged init — runs on first connect AND on reconnect AND on notify_klippy_ready.
+  /** Staged init - runs on first connect AND on reconnect AND on notify_klippy_ready.
    *  Guarded so overlapping triggers (reconnect + klippy_ready) can't interleave two seeds. */
   private async bootstrap(): Promise<void> {
     if (this.bootstrapping) return
@@ -93,7 +93,7 @@ export class FilaMindSession {
       this.klippy.set(ks)
       if (!isKlippyLive(ks)) {
         this.setLive(false)
-        return // Klipper not ready — no objects to query yet; wait for notify_klippy_ready
+        return // Klipper not ready - no objects to query yet; wait for notify_klippy_ready
       }
       const q = await this.connector.call<{ status?: Record<string, Record<string, unknown>> }>(
         'printer.objects.query',

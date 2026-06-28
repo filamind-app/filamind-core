@@ -1,6 +1,6 @@
 // The SENDER side of the cross-surface command bus. Moonraker only lets connections that
 // identified as type:"agent" call connection.send_event, so the command bus rides its OWN
-// lightweight agent connection — separate from a surface's main data session (which stays its
+// lightweight agent connection - separate from a surface's main data session (which stays its
 // honest type, e.g. "web"). One CommandSender owns exactly one agent Connector.
 //
 // It is deliberately a second connection rather than relabelling the data session as an agent:
@@ -18,14 +18,14 @@ import {
 } from './commands'
 
 export interface CommandSenderOptions {
-  /** Stable agent name (pinned — a drifting name registers phantom duplicates on reconnect). */
+  /** Stable agent name (pinned - a drifting name registers phantom duplicates on reconnect). */
   client_name: string
   version: string
   /** Required: Moonraker documents `url` as mandatory for identify; omitting it can make a strict
    *  host reject the agent identify, silently stranding the bus. */
   url: string
   logger?: Logger
-  /** Fires whenever readiness flips (connected+identified) — lets a UI gate its send affordances. */
+  /** Fires whenever readiness flips (connected+identified) - lets a UI gate its send affordances. */
   onReadyChange?: (ready: boolean) => void
 }
 
@@ -43,7 +43,7 @@ export class CommandSender {
   ) {
     this.log = opts.logger ?? NULL_LOGGER
     connector.setCallbacks({
-      // Moonraker forgets the agent identity on disconnect → re-identify on every genuine reconnect.
+      // Moonraker forgets the agent identity on disconnect > re-identify on every genuine reconnect.
       onReconnected: () => {
         this.setIdentified(false)
         void this.ensureIdentified().catch(() => this.scheduleRetry())
@@ -56,7 +56,7 @@ export class CommandSender {
     })
   }
 
-  /** true only when the bus is connected AND identified — gate remote-control affordances on this. */
+  /** true only when the bus is connected AND identified - gate remote-control affordances on this. */
   get ready(): boolean {
     return this._ready
   }
@@ -75,7 +75,7 @@ export class CommandSender {
   }
 
   /** Broadcast a UI-only command to the other FilaMind surfaces. Best-effort: a command issued
-   *  while the bus is down is dropped (logged), never queued/replayed — a stale "navigate" fired
+   *  while the bus is down is dropped (logged), never queued/replayed - a stale "navigate" fired
    *  minutes later would yank a screen unexpectedly. */
   async send(cmd: RemoteCommand): Promise<void> {
     if (this.connector.state !== 'ready') {

@@ -1,4 +1,4 @@
-// §18.3 — type safety over the Moonraker JSON-RPC surface:
+// §18.3 - type safety over the Moonraker JSON-RPC surface:
 //  - RpcError preserves the JSON-RPC {code, data} instead of flattening to a bare Error,
 //  - MoonrakerMethods types the result of the commonly-used `call()` methods (autocomplete + result shape),
 //  - NotifyEvent + parseNotifyEvent turn the positional notify_* params into a discriminated union

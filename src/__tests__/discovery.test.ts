@@ -33,7 +33,7 @@ function factory() {
 }
 
 describe('deriveCandidates', () => {
-  it('derives same-origin, direct-port, and localhost candidates (http → ws)', () => {
+  it('derives same-origin, direct-port, and localhost candidates (http > ws)', () => {
     expect(deriveCandidates({ protocol: 'http:', hostname: 'printer.local' })).toEqual([
       'ws://printer.local/websocket',
       'ws://printer.local:7125/websocket',

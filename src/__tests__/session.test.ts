@@ -58,7 +58,7 @@ const ready = (extruderTemp = 200) => ({
 })
 
 describe('FilaMindSession bootstrap', () => {
-  it('stages init when Klippy is ready → live, capabilities, seeded, subscribed', async () => {
+  it('stages init when Klippy is ready > live, capabilities, seeded, subscribed', async () => {
     const c = new FakeConnector()
     c.responses = ready(205)
     const s = new FilaMindSession(c, { subscriptions: { extruder: ['temperature'] } })
@@ -161,7 +161,7 @@ describe('FilaMindSession runtime routing', () => {
     c.emit('notify_agent_event', [
       { agent: 'FilaMind 3d', event: 'filamind:command', data: { kind: 'navigate', view: 'control' } },
     ])
-    c.emit('notify_agent_event', [{ agent: 'x' }]) // malformed (no event) → dropped
+    c.emit('notify_agent_event', [{ agent: 'x' }]) // malformed (no event) > dropped
 
     expect(seen).toEqual([
       { agent: 'FilaMind 3d', event: 'filamind:command', data: { kind: 'navigate', view: 'control' } },

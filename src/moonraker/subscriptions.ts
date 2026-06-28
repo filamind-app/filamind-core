@@ -37,7 +37,7 @@ export function tier(t: SubscriptionTier): SubscriptionMap {
 }
 
 /** Union of subscription maps (`null` = "all fields" wins). The single source for the
- *  null-wins merge rule — consumers compose a baseline tier with widget-declared needs. */
+ *  null-wins merge rule - consumers compose a baseline tier with widget-declared needs. */
 export function mergeSubscriptions(...maps: SubscriptionMap[]): SubscriptionMap {
   const out: SubscriptionMap = {}
   for (const map of maps) {

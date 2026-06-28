@@ -1,5 +1,5 @@
 // Parses Klipper's interactive `// action:prompt_*` protocol (emitted on
-// notify_gcode_response) into structured modal dialogs — the native-grade
+// notify_gcode_response) into structured modal dialogs - the native-grade
 // resilience UX (F13). Button clicks run their gcode through the write-arbiter.
 
 export type ButtonStyle = 'primary' | 'secondary' | 'warning'

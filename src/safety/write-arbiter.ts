@@ -1,4 +1,4 @@
-// Fail-closed write-arbiter (§12 spine) — the single chokepoint every FilaMind-originated
+// Fail-closed write-arbiter (§12 spine) - the single chokepoint every FilaMind-originated
 // mutation (gcode, config write, setup action) funnels through. It enforces safe-mode and
 // a caller-supplied guard (e.g. "Klippy ready + connection live"), and logs every write.
 // This is the enforcement arm of provenance: if state isn't trustworthy, writes are refused.

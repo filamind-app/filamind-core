@@ -1,10 +1,10 @@
 // Cross-surface remote-control command protocol. One FilaMind surface (e.g. FilaMind 3d) can
 // steer another (e.g. the on-printer FilaMind screen) by broadcasting a command over Moonraker's
-// agent-event bus (connection.send_event -> notify_agent_event). Commands are UI-ONLY — they
-// navigate/annotate another surface, never touch the printer — so they are NOT §12 writes.
+// agent-event bus (connection.send_event -> notify_agent_event). Commands are UI-ONLY - they
+// navigate/annotate another surface, never touch the printer - so they are NOT §12 writes.
 //
 // This module is transport-agnostic: it defines the event name, the command union, and STRICT
-// validators. Untrusted input (the bus is broadcast to every client) is parsed defensively — an
+// validators. Untrusted input (the bus is broadcast to every client) is parsed defensively - an
 // unrecognised shape yields null and is ignored, exactly like settings migrate().
 
 /** The single agent-event name FilaMind uses; everything else on the bus is ignored. */
@@ -32,8 +32,8 @@ export interface AgentEvent {
 
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null
 
-// C0 controls (0000–001F), DEL + C1 (007F–009F), zero-width (200B–200F), bidi embedding/override
-// (202A–202E), bidi isolates (2066–2069), and BOM/ZWNBSP (FEFF). The bus is an open broadcast, so
+// C0 controls (0000-001F), DEL + C1 (007F-009F), zero-width (200B-200F), bidi embedding/override
+// (202A-202E), bidi isolates (2066-2069), and BOM/ZWNBSP (FEFF). The bus is an open broadcast, so
 // strip these from untrusted message text before it reaches the DOM. Built from \u escapes (ASCII
 // source only) so the pattern is unambiguous.
 const CONTROL_BIDI = new RegExp(

@@ -63,8 +63,8 @@ describe('MoonrakerClient', () => {
     const p = client.connect()
     sockets[0]!.open()
     await p
-    sockets[0]!.close() // drop → schedules a backoff reconnect
-    await vi.runOnlyPendingTimersAsync() // fire the timer → a fresh connect()
+    sockets[0]!.close() // drop > schedules a backoff reconnect
+    await vi.runOnlyPendingTimersAsync() // fire the timer > a fresh connect()
     sockets[1]!.open()
     expect(reconnects).toBe(1)
   })
@@ -95,7 +95,7 @@ describe('MoonrakerClient', () => {
     const p = client.connect()
     sockets[0]!.open()
     await p
-    sockets[0]!.close() // drop → schedules a backoff reconnect
+    sockets[0]!.close() // drop > schedules a backoff reconnect
     expect(client.state).toBe('reconnecting')
     client.close() // user closes during the backoff window
     expect(client.state).toBe('closed')
