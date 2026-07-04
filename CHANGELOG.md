@@ -2,6 +2,14 @@
 
 All notable changes to `@filamind-app/core` are documented here. Format: `## [version]` sections (parsed by the release workflow).
 
+## [0.1.5]
+
+### Changed
+
+- Release workflow skips the npm publish when `NPM_TOKEN` is absent (so a tag without the secret no
+  longer fails); release title is the version tag only.
+- Modernized README + added `docs/ARCHITECTURE.md`; ASCII-only published text.
+
 ## [0.1.4]
 
 - **Per-surface adaptive dashboard** — a single machineUUID-keyed dashboard definition plus a pure resolver that adapts it to each surface + viewport: `surfaceHint(target, viewportWidth)` (`dense-desktop` / `thumb-phone` / `big-touch`), a `DashboardLayout` / `DashboardSlot` schema, and `resolveDashboard(layout, available, hint)` (honours slot order, appends widgets the layout doesn't mention, hides per-hint via `hideOn`, drops unknown ids, returns the column count for the hint). `coerceDashboardLayout()` validates persisted layouts; `UserSettings` gains an optional `dashboardLayout` carried through `migrate()` only when valid. Framework-agnostic, so every surface renders from the same source; never controls the emergency stop (shells wire that in independently).
