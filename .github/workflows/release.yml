@@ -28,11 +28,31 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
-      - name: Publish to npm (only when NPM_TOKEN is set; otherwise publish manually)
-        if: ${{ env.NPM_TOKEN != '' }}
+      # A tagged release that does not reach npm is invisible: the GitHub Release is created, the
+      # run is green, and every consumer keeps resolving the previous version. That happened to
+      # v0.1.5 and v0.1.6 and went unnoticed for weeks. Fail loudly instead of skipping quietly.
+      - name: Require a registry token
+        run: |
+          if [ -z "$NPM_TOKEN" ]; then
+            echo "::error::NPM_TOKEN is not set, so this release cannot be published to npm."
+            echo "::error::Set the NPM_TOKEN repository secret, or publish by hand with"
+            echo "::error::  npm publish --access public"
+            echo "::error::and re-run. A release that only exists on GitHub reaches no consumer."
+            exit 1
+          fi
+      - name: Publish to npm
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
+      - name: Verify the version reached the registry
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          PUBLISHED="$(npm view @filamind-app/core version)"
+          echo "tag=$VERSION registry=$PUBLISHED"
+          [ "$VERSION" = "$PUBLISHED" ] || {
+            echo "::error::npm still serves $PUBLISHED after publishing $VERSION."
+            exit 1
+          }
       # Release notes come from CHANGELOG.md (not auto-generated from commits) so the
       # published text is authored and stays within the R1 no-external-refs rule.
       - name: Release notes from CHANGELOG
