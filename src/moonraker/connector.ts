@@ -2,12 +2,7 @@
 // a remote-tunnel or other backend can slot in later without the UI knowing.
 
 export type ConnectionState =
-  | 'idle'
-  | 'connecting'
-  | 'identifying'
-  | 'ready'
-  | 'reconnecting'
-  | 'closed'
+  'idle' | 'connecting' | 'identifying' | 'ready' | 'reconnecting' | 'closed'
 
 export interface ConnectorCallbacks {
   /** notify_* fan-out (e.g. notify_status_update, notify_gcode_response) */

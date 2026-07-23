@@ -159,12 +159,20 @@ describe('FilaMindSession runtime routing', () => {
     await s.start()
 
     c.emit('notify_agent_event', [
-      { agent: 'FilaMind 3d', event: 'filamind:command', data: { kind: 'navigate', view: 'control' } },
+      {
+        agent: 'FilaMind 3d',
+        event: 'filamind:command',
+        data: { kind: 'navigate', view: 'control' },
+      },
     ])
     c.emit('notify_agent_event', [{ agent: 'x' }]) // malformed (no event) > dropped
 
     expect(seen).toEqual([
-      { agent: 'FilaMind 3d', event: 'filamind:command', data: { kind: 'navigate', view: 'control' } },
+      {
+        agent: 'FilaMind 3d',
+        event: 'filamind:command',
+        data: { kind: 'navigate', view: 'control' },
+      },
     ])
   })
 

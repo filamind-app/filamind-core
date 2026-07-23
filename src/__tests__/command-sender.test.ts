@@ -64,7 +64,11 @@ describe('CommandSender', () => {
     await s.start()
 
     const identify = bus.calls.find((c) => c.method === 'server.connection.identify')
-    expect(identify?.params).toMatchObject({ client_name: 'FilaMind 3d', version: '1.2.3', type: 'agent' })
+    expect(identify?.params).toMatchObject({
+      client_name: 'FilaMind 3d',
+      version: '1.2.3',
+      type: 'agent',
+    })
     expect(s.ready).toBe(true)
   })
 
@@ -75,7 +79,9 @@ describe('CommandSender', () => {
     await s.navigate('control')
 
     const order = bus.methods()
-    expect(order.indexOf('server.connection.identify')).toBeLessThan(order.indexOf('connection.send_event'))
+    expect(order.indexOf('server.connection.identify')).toBeLessThan(
+      order.indexOf('connection.send_event'),
+    )
     const sent = bus.calls.find((c) => c.method === 'connection.send_event')
     expect(sent?.params).toEqual({
       event: FILAMIND_COMMAND_EVENT,
@@ -90,7 +96,9 @@ describe('CommandSender', () => {
     await s.message('warn', 'check the bed')
     await s.locate()
 
-    const datas = bus.calls.filter((c) => c.method === 'connection.send_event').map((c) => c.params?.data)
+    const datas = bus.calls
+      .filter((c) => c.method === 'connection.send_event')
+      .map((c) => c.params?.data)
     expect(datas).toEqual([
       { kind: 'message', level: 'warn', text: 'check the bed' },
       { kind: 'locate' },

@@ -43,7 +43,10 @@ export function migrate(raw: unknown): UserSettings {
   const r = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {}
   const out: UserSettings = {
     version: SETTINGS_VERSION,
-    theme: typeof r.theme === 'string' && r.theme in themes ? (r.theme as ThemeName) : DEFAULT_SETTINGS.theme,
+    theme:
+      typeof r.theme === 'string' && r.theme in themes
+        ? (r.theme as ThemeName)
+        : DEFAULT_SETTINGS.theme,
     locale:
       typeof r.locale === 'string' && LOCALES.some((l) => l.code === r.locale)
         ? r.locale
@@ -56,7 +59,8 @@ export function migrate(raw: unknown): UserSettings {
       typeof r.motifDensity === 'string' && MOTIFS.has(r.motifDensity)
         ? (r.motifDensity as UserSettings['motifDensity'])
         : DEFAULT_SETTINGS.motifDensity,
-    reducedMotion: typeof r.reducedMotion === 'boolean' ? r.reducedMotion : DEFAULT_SETTINGS.reducedMotion,
+    reducedMotion:
+      typeof r.reducedMotion === 'boolean' ? r.reducedMotion : DEFAULT_SETTINGS.reducedMotion,
   }
   // The dashboard layout is optional; only carry it through when it coerces to a valid shape so the
   // round-trip of a layout-free blob stays identical to DEFAULT_SETTINGS.

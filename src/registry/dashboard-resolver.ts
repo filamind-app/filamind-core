@@ -70,7 +70,9 @@ export function resolveDashboard(
   const widgets: WidgetDefinition[] = []
   for (const slot of [...slots]
     .filter((s) => !(s.hideOn ?? []).includes(hint))
-    .sort((a, b) => (a.order ?? Number.POSITIVE_INFINITY) - (b.order ?? Number.POSITIVE_INFINITY))) {
+    .sort(
+      (a, b) => (a.order ?? Number.POSITIVE_INFINITY) - (b.order ?? Number.POSITIVE_INFINITY),
+    )) {
     const w = byId.get(slot.widgetId)
     if (w && !used.has(w.id)) {
       widgets.push(w)

@@ -90,12 +90,7 @@ export type {
 } from './registry/dashboard-resolver'
 
 // Pharaonic design tokens
-export {
-  themes,
-  DEFAULT_THEME,
-  themeToCssVars,
-  applyTheme,
-} from './theme/tokens'
+export { themes, DEFAULT_THEME, themeToCssVars, applyTheme } from './theme/tokens'
 export type { ThemeTokens, ThemeName } from './theme/tokens'
 
 // i18n (shared 19-locale foundation)
@@ -108,11 +103,7 @@ export {
   pluralCategory,
 } from './i18n/locale-meta'
 export type { LocaleMeta, PluralCategory } from './i18n/locale-meta'
-export {
-  translate,
-  Translator,
-  resolveMessage,
-} from './i18n/translator'
+export { translate, Translator, resolveMessage } from './i18n/translator'
 export type { Catalog, Params, BackendMessage } from './i18n/translator'
 
 // cross-surface remote control (UI-only command bus over Moonraker agent events)
@@ -124,7 +115,13 @@ export {
   parseAgentEvent,
   handleAgentCommand,
 } from './remote/commands'
-export type { RemoteCommand, RemoteView, RemoteMessageLevel, AgentEvent, AgentAllow } from './remote/commands'
+export type {
+  RemoteCommand,
+  RemoteView,
+  RemoteMessageLevel,
+  AgentEvent,
+  AgentAllow,
+} from './remote/commands'
 export { CommandSender } from './remote/command-sender'
 export type { CommandSenderOptions } from './remote/command-sender'
 

@@ -3,12 +3,7 @@
 // backoff+jitter reconnect with a max-attempts terminal state · re-subscribe on reconnect.
 // The WebSocket is injectable (wsFactory) so tests can drive reconnect/coalescing.
 
-import type {
-  Connector,
-  ConnectorCallbacks,
-  ConnectionState,
-  SubscriptionMap,
-} from './connector'
+import type { Connector, ConnectorCallbacks, ConnectionState, SubscriptionMap } from './connector'
 import type { Logger } from '../observability/logger'
 import { RpcError, type MoonrakerMethods } from './rpc-types'
 
@@ -208,7 +203,8 @@ export class MoonrakerClient implements Connector {
       if (!p) return
       clearTimeout(p.timer)
       this.pending.delete(msg.id)
-      if (msg.error) p.reject(new RpcError(msg.error.message ?? 'rpc error', msg.error.code, msg.error.data))
+      if (msg.error)
+        p.reject(new RpcError(msg.error.message ?? 'rpc error', msg.error.code, msg.error.data))
       else p.resolve(msg.result)
       return
     }
@@ -228,7 +224,9 @@ function xhrUpload(url: string, form: FormData, onProgress?: (pct: number) => vo
       }
     }
     xhr.onload = () =>
-      xhr.status >= 200 && xhr.status < 300 ? resolve() : reject(new Error(`upload failed: ${xhr.status}`))
+      xhr.status >= 200 && xhr.status < 300
+        ? resolve()
+        : reject(new Error(`upload failed: ${xhr.status}`))
     xhr.onerror = () => reject(new Error('upload network error'))
     xhr.send(form)
   })

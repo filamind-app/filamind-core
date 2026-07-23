@@ -31,7 +31,10 @@ export function isStale(s: Stamped<unknown> | undefined, now: number = Date.now(
 }
 
 /** UI hint a widget can map to a class: 'ok' | 'stale' | 'unknown'. */
-export function freshness(s: Stamped<unknown> | undefined, now: number = Date.now()): 'ok' | 'stale' | 'unknown' {
+export function freshness(
+  s: Stamped<unknown> | undefined,
+  now: number = Date.now(),
+): 'ok' | 'stale' | 'unknown' {
   if (!s || s.source === 'unknown') return 'unknown'
   return isStale(s, now) ? 'stale' : 'ok'
 }

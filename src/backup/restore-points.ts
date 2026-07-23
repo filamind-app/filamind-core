@@ -31,7 +31,10 @@ export function memoryRestoreStore(): RestoreStore {
       byMachine.set(m, arr)
     },
     remove: async (m, id) => {
-      byMachine.set(m, (byMachine.get(m) ?? []).filter((p) => p.id !== id))
+      byMachine.set(
+        m,
+        (byMachine.get(m) ?? []).filter((p) => p.id !== id),
+      )
     },
   }
 }
@@ -45,7 +48,12 @@ export class RestorePoints {
     private readonly retention = 20,
   ) {}
 
-  async snapshot(scope: string, trigger: string, data: unknown, reversible = true): Promise<RestorePoint> {
+  async snapshot(
+    scope: string,
+    trigger: string,
+    data: unknown,
+    reversible = true,
+  ): Promise<RestorePoint> {
     const seq = this.seq++
     const ts = Date.now()
     const point: RestorePoint = {
@@ -73,7 +81,9 @@ export class RestorePoints {
   /** Keep only the newest `retention` points per scope. */
   private async prune(scope: string): Promise<void> {
     const all = await this.list()
-    const inScope = all.filter((p) => p.scope === scope).sort((a, b) => b.ts - a.ts || b.seq - a.seq)
+    const inScope = all
+      .filter((p) => p.scope === scope)
+      .sort((a, b) => b.ts - a.ts || b.seq - a.seq)
     for (const stale of inScope.slice(this.retention)) {
       await this.store.remove(this.machineId, stale.id)
     }

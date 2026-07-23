@@ -8,10 +8,12 @@ export type Catalog = Record<string, unknown>
 export type Params = Record<string, string | number>
 
 function lookup(catalog: Catalog, key: string): unknown {
-  return key.split('.').reduce<unknown>(
-    (o, part) => (o && typeof o === 'object' ? (o as Record<string, unknown>)[part] : undefined),
-    catalog,
-  )
+  return key
+    .split('.')
+    .reduce<unknown>(
+      (o, part) => (o && typeof o === 'object' ? (o as Record<string, unknown>)[part] : undefined),
+      catalog,
+    )
 }
 
 function interpolate(s: string, params?: Params): string {

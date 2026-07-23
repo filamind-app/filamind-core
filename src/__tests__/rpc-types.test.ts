@@ -42,7 +42,9 @@ describe('parseNotifyEvent', () => {
 
   it('narrows notify_agent_event', () => {
     expect(
-      parseNotifyEvent('notify_agent_event', [{ agent: 'FilaMind 3d', event: 'navigate', data: { view: 'status' } }]),
+      parseNotifyEvent('notify_agent_event', [
+        { agent: 'FilaMind 3d', event: 'navigate', data: { view: 'status' } },
+      ]),
     ).toEqual({
       method: 'notify_agent_event',
       agent: 'FilaMind 3d',
@@ -98,7 +100,11 @@ describe('MoonrakerClient error response', () => {
     const call = client.call('printer.gcode.script', { script: 'BAD' })
     const id = sock!.lastId()
     sock!.message(
-      JSON.stringify({ jsonrpc: '2.0', id, error: { code: -32602, message: 'Invalid', data: { x: 1 } } }),
+      JSON.stringify({
+        jsonrpc: '2.0',
+        id,
+        error: { code: -32602, message: 'Invalid', data: { x: 1 } },
+      }),
     )
     await expect(call).rejects.toBeInstanceOf(RpcError)
     await call.catch((e: RpcError) => {

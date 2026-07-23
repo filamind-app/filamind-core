@@ -98,7 +98,13 @@ describe('migrate (coercion / hardening)', () => {
 
   it('keeps valid values verbatim', () => {
     expect(
-      migrate({ theme: 'anubis', locale: 'ar', density: 'compact', motifDensity: 'full', reducedMotion: true }),
+      migrate({
+        theme: 'anubis',
+        locale: 'ar',
+        density: 'compact',
+        motifDensity: 'full',
+        reducedMotion: true,
+      }),
     ).toEqual({
       version: SETTINGS_VERSION,
       theme: 'anubis',
@@ -140,7 +146,13 @@ describe('applySettings', () => {
   })
   it('applies the theme css variables', () => {
     const set: Record<string, string> = {}
-    const el = { style: { setProperty: (p: string, v: string) => { set[p] = v } } }
+    const el = {
+      style: {
+        setProperty: (p: string, v: string) => {
+          set[p] = v
+        },
+      },
+    }
     applySettings({ ...DEFAULT_SETTINGS, theme: 'anubis' }, el)
     expect(set['--fm-primary']).toBe('#C2843B') // Anubis ochre
   })

@@ -24,7 +24,11 @@ describe('machine identity', () => {
   })
 
   it('derives a stable fm-<hash> from a stable system_info subset', async () => {
-    const si = { hostname: 'sv08', cpu_info: { serial_number: 'XYZ' }, distribution: { name: 'Debian' } }
+    const si = {
+      hostname: 'sv08',
+      cpu_info: { serial_number: 'XYZ' },
+      distribution: { name: 'Debian' },
+    }
     const a = await deriveMachineId(connWith(si))
     const b = await deriveMachineId(connWith(si))
     expect(a).toMatch(/^fm-[0-9a-f]{8}$/)
