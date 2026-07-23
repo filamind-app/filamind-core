@@ -40,7 +40,9 @@ describe('deepMerge', () => {
 describe('PrinterState motion_report fast-path', () => {
   it('applies motion_report immediately, coalesces the rest', () => {
     const ps = new PrinterState(1000)
-    ps.applyNotify([{ motion_report: { live_position: [1, 2, 3] }, extruder: { temperature: 205 } }])
+    ps.applyNotify([
+      { motion_report: { live_position: [1, 2, 3] }, extruder: { temperature: 205 } },
+    ])
     // fast-path applied now; slow patch is still pending until flush
     expect((ps.objects.value.motion_report as any).live_position).toEqual([1, 2, 3])
     expect(ps.objects.value.extruder).toBeUndefined()
@@ -52,8 +54,19 @@ describe('PrinterState motion_report fast-path', () => {
 describe('widget registry', () => {
   it('aggregates subscriptions (null wins, fields union)', () => {
     _resetRegistry()
-    registerWidget({ id: 'a', title: 'A', component: async () => null, subscriptions: { toolhead: ['position'], fan: null } })
-    registerWidget({ id: 'b', title: 'B', component: async () => null, subscriptions: { toolhead: ['homed_axes'] }, targets: ['screen'] })
+    registerWidget({
+      id: 'a',
+      title: 'A',
+      component: async () => null,
+      subscriptions: { toolhead: ['position'], fan: null },
+    })
+    registerWidget({
+      id: 'b',
+      title: 'B',
+      component: async () => null,
+      subscriptions: { toolhead: ['homed_axes'] },
+      targets: ['screen'],
+    })
     const agg = aggregateSubscriptions(['a', 'b'])
     expect(new Set(agg.toolhead as string[])).toEqual(new Set(['position', 'homed_axes']))
     expect(agg.fan).toBeNull()
@@ -94,7 +107,10 @@ describe('themes', () => {
     }
     for (const [name, t] of Object.entries(themes)) {
       expect(ratio(t.text, t.bg), `${name}: body text on bg`).toBeGreaterThanOrEqual(4.5)
-      expect(ratio(t.primaryContrast, t.primary), `${name}: text on primary`).toBeGreaterThanOrEqual(3)
+      expect(
+        ratio(t.primaryContrast, t.primary),
+        `${name}: text on primary`,
+      ).toBeGreaterThanOrEqual(3)
     }
   })
 })

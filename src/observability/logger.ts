@@ -19,7 +19,8 @@ export class Logger {
   ) {}
 
   log(level: LogLevel, msg: string, data?: unknown): void {
-    const e: LogEntry = data === undefined ? { ts: Date.now(), level, msg } : { ts: Date.now(), level, msg, data }
+    const e: LogEntry =
+      data === undefined ? { ts: Date.now(), level, msg } : { ts: Date.now(), level, msg, data }
     this.ring.push(e)
     if (this.ring.length > this.max) this.ring.shift()
     this.sink?.(e)

@@ -74,7 +74,10 @@ describe('resolveMoonrakerUrl', () => {
 
   it('rejects when every candidate fails', async () => {
     const { sockets, wsFactory } = factory()
-    const p = resolveMoonrakerUrl({ candidates: ['ws://a/websocket', 'ws://b/websocket'], wsFactory })
+    const p = resolveMoonrakerUrl({
+      candidates: ['ws://a/websocket', 'ws://b/websocket'],
+      wsFactory,
+    })
     sockets[0]!.error()
     sockets[1]!.error()
     await expect(p).rejects.toThrow(/no endpoint responded/)

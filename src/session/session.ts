@@ -83,11 +83,13 @@ export class FilaMindSession {
     this.bootstrapping = true
     try {
       if (this.opts.identify) {
-        await this.connector.call('server.connection.identify', { ...this.opts.identify }).catch((e) =>
-          this.log.warn('identify failed', String(e)),
-        )
+        await this.connector
+          .call('server.connection.identify', { ...this.opts.identify })
+          .catch((e) => this.log.warn('identify failed', String(e)))
       }
-      const info = await this.connector.call<{ klippy_state?: string; components?: string[] }>('server.info')
+      const info = await this.connector.call<{ klippy_state?: string; components?: string[] }>(
+        'server.info',
+      )
       this.capabilities.set(info?.components ?? [])
       const ks = deriveKlippyState(info?.klippy_state)
       this.klippy.set(ks)

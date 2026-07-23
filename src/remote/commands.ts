@@ -44,10 +44,7 @@ const CONTROL_BIDI = new RegExp(
 /** Clean untrusted text: drop control/bidi chars, then clamp by CODE POINT (never split a surrogate
  *  pair). Returns null when nothing printable remains. */
 function sanitizeText(raw: string): string | null {
-  const cleaned = Array.from(raw.replace(CONTROL_BIDI, ' '))
-    .slice(0, 280)
-    .join('')
-    .trim()
+  const cleaned = Array.from(raw.replace(CONTROL_BIDI, ' ')).slice(0, 280).join('').trim()
   return cleaned.length > 0 ? cleaned : null
 }
 

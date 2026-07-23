@@ -84,7 +84,10 @@ export class CommandSender {
     }
     try {
       await this.ensureIdentified()
-      await this.connector.call('connection.send_event', { event: FILAMIND_COMMAND_EVENT, data: cmd })
+      await this.connector.call('connection.send_event', {
+        event: FILAMIND_COMMAND_EVENT,
+        data: cmd,
+      })
     } catch (e) {
       this.log.warn('command send failed', String(e))
     }

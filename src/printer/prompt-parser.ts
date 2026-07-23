@@ -17,10 +17,7 @@ export interface PromptDialog {
   footer: PromptButton[]
 }
 
-export type PromptEvent =
-  | { type: 'show'; dialog: PromptDialog }
-  | { type: 'end' }
-  | null
+export type PromptEvent = { type: 'show'; dialog: PromptDialog } | { type: 'end' } | null
 
 function parseButton(rest: string): PromptButton {
   // "<label>|<gcode>|<style>"

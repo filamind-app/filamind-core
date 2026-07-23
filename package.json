@@ -33,9 +33,12 @@
     "dev": "tsup src/index.ts --format esm --dts --watch",
     "type-check": "tsc --noEmit",
     "test": "vitest run",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "format": "prettier --write \"src/**/*.ts\" \"*.{ts,js,json}\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"*.{ts,js,json}\""
   },
   "devDependencies": {
+    "prettier": "^3.9.5",
     "tsup": "^8.5.1",
     "typescript": "~6.0.3",
     "vitest": "^4.1.9"
