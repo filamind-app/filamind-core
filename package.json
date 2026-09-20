@@ -38,7 +38,7 @@
     "format:check": "prettier --check \"src/**/*.ts\" \"*.{ts,js,json}\""
   },
   "devDependencies": {
-    "prettier": "3.9.6",
+    "prettier": "3.9.7",
     "tsup": "^8.5.1",
     "typescript": "~6.0.3",
     "vitest": "^4.1.10"
